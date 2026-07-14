@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)file:///Users/a1/Downloads/china-patent-advisor-home.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>China Patent Advisor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./China Patent Advisor_files/css2" rel="stylesheet">
+<style>
+  :root{
+    --ink:#20211d; --paper:#e9e5d8; --paper-2:#ded8c5; --seal:#a8321f; --seal-dark:#7c2416;
+    --jade:#3c6e5c; --amber:#8a5a1f; --line: rgba(32,33,29,0.16); --line-strong: rgba(32,33,29,0.32);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ background:var(--paper); color:var(--ink); font-family:'Source Serif 4', serif; -webkit-font-smoothing:antialiased; min-height:100vh; }
+  .bg-texture{ position:fixed; inset:0; pointer-events:none; opacity:0.05;
+    background-image: repeating-linear-gradient(0deg, var(--ink) 0px, var(--ink) 1px, transparent 1px, transparent 3px); }
+  .wrap{ max-width:760px; margin:0 auto; padding:64px 24px 100px; position:relative; }
+
+  header.hero{ border-bottom:1px solid var(--line-strong); padding-bottom:36px; margin-bottom:48px; text-align:center; }
+  .seal-mark{
+    width:64px; height:64px; margin:0 auto 24px; border:3px solid var(--seal); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; transform:rotate(-4deg);
+  }
+  .seal-mark span{ font-family:'Noto Serif SC', serif; font-weight:700; color:var(--seal); font-size:24px; }
+  .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--seal); margin-bottom:16px; }
+  h1{ font-size:clamp(28px,5.5vw,42px); line-height:1.15; margin:0 0 16px; font-weight:700; letter-spacing:-0.01em; }
+  .cn-sub{ font-family:'Noto Serif SC', serif; font-size:16px; color:rgba(32,33,29,0.6); margin:0 0 22px; }
+  .hero-desc{ font-size:16px; line-height:1.65; color:rgba(32,33,29,0.78); max-width:52ch; margin:0 auto; }
+
+  .case-file{
+    display:block; position:relative; padding:26px 26px 26px 30px; margin-bottom:16px;
+    background:var(--paper-2); border:1px solid var(--line); text-decoration:none; color:var(--ink);
+    transition: border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  .case-file:hover{ border-color:var(--line-strong); background:#e2dcc7; transform: translateX(2px); }
+  .case-file::before{
+    content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--seal); opacity:0.5;
+  }
+  .case-num{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--seal); margin-bottom:8px; display:block;
+  }
+  .case-title{ font-size:18px; font-weight:600; line-height:1.4; margin:0 0 6px; max-width:56ch; }
+  .case-cn{ font-family:'Noto Serif SC', serif; font-size:13.5px; color:rgba(32,33,29,0.55); }
+  .case-arrow{
+    position:absolute; right:24px; top:50%; transform:translateY(-50%);
+    font-family:'IBM Plex Mono', monospace; color:rgba(32,33,29,0.35); font-size:18px;
+  }
+
+  .list-label{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color:rgba(32,33,29,0.5); margin-bottom:18px;
+  }
+
+  footer{ max-width:760px; margin:60px auto 0; padding:24px; border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:rgba(32,33,29,0.45); letter-spacing:0.04em;
+    display:flex; justify-content:space-between; text-align:left; }
+
+  @media (max-width:520px){
+    .wrap{ padding:48px 18px 80px; }
+    .case-file{ padding:22px 18px 22px 24px; }
+    .case-arrow{ display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-texture"></div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="seal-mark"><span>案</span></div>
+    <div class="eyebrow">China Patent Advisor</div>
+    <h1>Chinese patent law, translated into decisions.</h1>
+    <p class="cn-sub">为外国企业提供的中国专利法律咨询工具</p>
+    <p class="hero-desc">Five common situations foreign businesses run into with Chinese patents. Pick the one closest to yours — answer a few questions, get a specific assessment, not a generic overview.</p>
+  </header>
+
+  <div class="list-label">Select your situation — 案卷 01–05</div>
+
+  <a class="case-file" href="file:///Users/a1/Downloads/scenario1.html">
+    <span class="case-num">案卷 001</span>
+    <h2 class="case-title">A competitor filed a patent on our technology first. What can we do?</h2>
+    <p class="case-cn">竞争对手抢先在中国申请了我们的技术专利</p>
+    <span class="case-arrow">→</span>
+  </a>
+
+  <a class="case-file" href="file:///Users/a1/Downloads/scenario2.html">
+    <span class="case-num">案卷 002</span>
+    <h2 class="case-title">We need to share our technology with a Chinese manufacturer or supplier. How do we protect it?</h2>
+    <p class="case-cn">与中国制造商/供应商合作时如何保护技术不被泄露</p>
+    <span class="case-arrow">→</span>
+  </a>
+
+  <a class="case-file" href="file:///Users/a1/Downloads/scenario3.html">
+    <span class="case-num">案卷 003</span>
+    <h2 class="case-title">Our patent was just invalidated in China. What now?</h2>
+    <p class="case-cn">我们的专利在中国被宣告无效了，能怎么应对？</p>
+    <span class="case-arrow">→</span>
+  </a>
+
+  <a class="case-file" href="file:///Users/a1/Downloads/scenario4.html">
+    <span class="case-num">案卷 004</span>
+    <h2 class="case-title">We found a product in China infringing our patent. How do we enforce our rights?</h2>
+    <p class="case-cn">发现中国产品侵犯了我们的专利，在中国怎么维权？</p>
+    <span class="case-arrow">→</span>
+  </a>
+
+  <a class="case-file" href="file:///Users/a1/Downloads/scenario5.html">
+    <span class="case-num">案卷 005</span>
+    <h2 class="case-title">A Chinese supplier says they own a patent on this technology. Can we safely source from them?</h2>
+    <p class="case-cn">中国供应商声称拥有某项技术专利，我们能放心采购吗？</p>
+    <span class="case-arrow">→</span>
+  </a>
+
+</div>
+
+<footer>
+  <span>CHINA PATENT ADVISOR — PROTOTYPE</span>
+  <span>5 案卷 · 决策工具</span>
+</footer>
+
+
+</body></html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)file:///Users/a1/Downloads/china-patent-advisor-scenario4.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>China Patent Advisor — Scenario 04</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./China Patent Advisor — Scenario 04_files/css2" rel="stylesheet">
+<style>
+  :root{
+    --ink:#20211d; --paper:#e9e5d8; --paper-2:#ded8c5; --seal:#a8321f; --seal-dark:#7c2416;
+    --jade:#3c6e5c; --amber:#8a5a1f; --line: rgba(32,33,29,0.16); --line-strong: rgba(32,33,29,0.32);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ background:var(--paper); color:var(--ink); font-family:'Source Serif 4', serif; -webkit-font-smoothing:antialiased; min-height:100vh; }
+  .bg-texture{ position:fixed; inset:0; pointer-events:none; opacity:0.05;
+    background-image: repeating-linear-gradient(0deg, var(--ink) 0px, var(--ink) 1px, transparent 1px, transparent 3px); }
+  .wrap{ max-width:760px; margin:0 auto; padding:56px 24px 120px; position:relative; }
+  header.hero{ border-bottom:1px solid var(--line-strong); padding-bottom:32px; margin-bottom:48px; }
+  .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--seal); display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+  .eyebrow::before{ content:''; width:7px;height:7px; background:var(--seal); display:inline-block; transform:rotate(45deg); }
+  h1{ font-size:clamp(26px,5vw,38px); line-height:1.16; margin:0 0 14px; font-weight:700; letter-spacing:-0.01em; }
+  .cn-sub{ font-family:'Noto Serif SC', serif; font-size:15px; color:rgba(32,33,29,0.6); margin:0 0 20px; }
+  .hero-desc{ font-size:16px; line-height:1.6; color:rgba(32,33,29,0.78); max-width:56ch; }
+  .back-link{ display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:rgba(32,33,29,0.55);
+    text-decoration:none; margin-bottom:22px; letter-spacing:0.03em; }
+  .back-link:hover{ color:var(--seal); }
+
+  .stage{ position:relative; padding-left:28px; border-left:1px solid var(--line); margin-bottom:8px; }
+  .stage.done{border-left-color:var(--line-strong);}
+  .stage-dot{ position:absolute; left:-6px; top:2px; width:11px;height:11px; border-radius:50%; background:var(--paper); border:1.5px solid var(--line-strong); }
+  .stage.done .stage-dot{ background:var(--seal); border-color:var(--seal); }
+  .stage-block{ padding: 6px 0 44px; }
+  .stage-label{ font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:rgba(32,33,29,0.5); margin-bottom:10px; }
+  .stage-q{ font-size:20px; font-weight:600; line-height:1.35; margin:0 0 22px; max-width:48ch; }
+
+  .choice{ display:block; width:100%; text-align:left; background:var(--paper-2); border:1px solid var(--line);
+    color:var(--ink); font-family:'Source Serif 4', serif; padding:16px 18px; margin-bottom:10px;
+    cursor:pointer; font-size:15.5px; line-height:1.5; transition: border-color .15s ease, background .15s ease, transform .1s ease; }
+  .choice .tag{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--seal); margin-right:10px; }
+  .choice .sub{ display:block; font-size:13px; color:rgba(32,33,29,0.55); margin-top:4px; }
+  .choice:hover{ border-color:var(--line-strong); background:#e2dcc7; }
+  .choice:active{ transform:scale(0.997); }
+  .choice.selected{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .choice.selected .tag{ color:#e0a08f; }
+  .choice.selected .sub{ color:rgba(233,229,216,0.6); }
+  .choice:disabled{ cursor:default; }
+
+  .answer{ margin-top:20px; padding:22px 24px; background:rgba(32,33,29,0.035); border-left:3px solid var(--jade);
+    font-size:15.5px; line-height:1.7; color:rgba(32,33,29,0.86); animation: rise .35s ease both; }
+  .answer.risk{ border-left-color:var(--seal); }
+  .answer strong{ color:var(--ink); }
+  .answer p{ margin:0 0 12px; }
+  .answer p:last-child{ margin-bottom:0; }
+  @keyframes rise{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
+
+  .case-block{ margin-top:14px; padding:14px 16px; background:rgba(60,110,92,0.07); border:1px dashed rgba(60,110,92,0.35);
+    font-size:14px; line-height:1.65; color:rgba(32,33,29,0.78); }
+  .case-block .case-label{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--jade); margin-bottom:6px; display:block; }
+
+  .urgency{ margin-top:14px; padding:12px 16px; background:rgba(168,50,31,0.08); border-left:3px solid var(--seal);
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; letter-spacing:0.01em; color:var(--seal-dark); line-height:1.6; }
+
+  .verdict{ position:relative; margin-top:16px; padding:36px 30px 30px; border:1px solid var(--line-strong); background:#f2efe4; animation: rise .5s ease both; }
+  .seal-stamp{ position:absolute; top:-22px; right:24px; width:74px; height:74px; border:3px solid var(--seal); border-radius:6px;
+    display:flex; align-items:center; justify-content:center; background:var(--paper); transform: rotate(-6deg); box-shadow:0 2px 0 rgba(0,0,0,0.05); }
+  .seal-stamp span{ font-family:'Noto Serif SC', serif; font-weight:700; color:var(--seal); font-size:24px; line-height:1; }
+  .verdict-label{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--seal); margin-bottom:10px; }
+  .verdict h3{ margin:0 0 14px; font-size:19px; max-width:34ch; }
+  .verdict p{ font-size:15.5px; line-height:1.7; color:rgba(32,33,29,0.82); margin:0 0 14px; }
+  .verdict ul{ margin:0 0 14px; padding-left:20px; }
+  .verdict li{ font-size:15px; line-height:1.6; margin-bottom:6px; color:rgba(32,33,29,0.82); }
+  .stat-row{ display:flex; gap:22px; margin-top:18px; margin-bottom:22px; flex-wrap:wrap; }
+  .stat{ min-width:110px; }
+  .stat .n{ font-family:'IBM Plex Mono', monospace; font-size:20px; color:var(--ink); font-weight:500; }
+  .stat .l{ font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:rgba(32,33,29,0.5); margin-top:2px; }
+
+  .subsection{ margin-top:24px; padding-top:22px; border-top:1px solid var(--line); }
+  .subsection-title{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:rgba(32,33,29,0.55); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  .subsection-title.risk-title{ color:var(--seal); }
+  .subsection-title.planb-title{ color:var(--amber); }
+  .pitfall-list{ margin:0; padding-left:0; list-style:none; }
+  .pitfall-list li{ font-size:14.5px; line-height:1.6; margin-bottom:10px; padding-left:18px; position:relative; color:rgba(32,33,29,0.8); }
+  .pitfall-list li::before{ content:'—'; position:absolute; left:0; color:var(--seal); }
+  .planb-list{ margin:0; padding-left:0; list-style:none; }
+  .planb-list li{ font-size:14.5px; line-height:1.6; margin-bottom:8px; padding-left:18px; position:relative; color:rgba(32,33,29,0.8); }
+  .planb-list li::before{ content:'→'; position:absolute; left:0; color:var(--amber); }
+
+  .reset-row{ margin-top:40px; text-align:center; }
+  .reset{ font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;
+    background:none; border:1px solid var(--line-strong); color:var(--ink); padding:10px 20px; cursor:pointer; }
+  .reset:hover{ background:var(--ink); color:var(--paper); }
+
+  footer{ max-width:760px; margin:60px auto 0; padding:24px; border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:rgba(32,33,29,0.45); letter-spacing:0.04em;
+    display:flex; justify-content:space-between; }
+
+  @media (max-width:520px){
+    .wrap{ padding:40px 18px 100px; }
+    .seal-stamp{ width:58px; height:58px; right:16px; top:-18px; }
+    .seal-stamp span{ font-size:19px; }
+    .stat-row{ gap:16px; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-texture"></div>
+<div class="wrap">
+
+  <a class="back-link" href="file:///Users/a1/Downloads/">← All scenarios</a>
+
+  <header class="hero">
+    <div class="eyebrow">China Patent Advisor · Scenario 04 of 05</div>
+    <h1>We found a product in China infringing our patent. How do we enforce our rights?</h1>
+    <p class="cn-sub">发现中国产品侵犯了我们的专利，在中国怎么维权？</p>
+    <p class="hero-desc">Answer three questions about the situation. You'll get a specific assessment of your enforcement options — administrative action, customs, or civil litigation — and what each actually costs and delivers.</p>
+  </header>
+
+  <!-- STAGE 1 -->
+  <div class="stage done" id="stage1">
+    <div class="stage-dot"></div>
+    <div class="stage-block">
+      <div class="stage-label">Step 1 — Where the infringing product is</div>
+      <p class="stage-q">Where are you encountering this infringement?</p>
+
+      <button class="choice" data-stage="1" data-value="domestic">
+        <span class="tag">A</span>Sold within the Chinese market — trade shows, e-commerce, local distribution
+      </button>
+      <button class="choice" data-stage="1" data-value="export">
+        <span class="tag">B</span>Manufactured in China and exported to our market
+      </button>
+
+      <div class="answer" id="answer1" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- STAGE 2 -->
+  <div class="stage" id="stage2" style="display:none;">
+    <div class="stage-dot"></div>
+    <div class="stage-block">
+      <div class="stage-label">Step 2 — Strength of your evidence</div>
+      <p class="stage-q">How solid is your evidence that this actually infringes?</p>
+
+      <button class="choice" data-stage="2" data-value="clear">
+        <span class="tag">A</span>Clear — we've mapped the product against our claims, element by element
+      </button>
+      <button class="choice" data-stage="2" data-value="partial">
+        <span class="tag">B</span>Similar, but we haven't done a formal claim-by-claim comparison
+      </button>
+      <button class="choice" data-stage="2" data-value="weak">
+        <span class="tag">C</span>Mostly circumstantial — it looks similar, that's about it
+      </button>
+
+      <div class="answer" id="answer2" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- STAGE 3 -->
+  <div class="stage" id="stage3" style="display:none;">
+    <div class="stage-dot"></div>
+    <div class="stage-block">
+      <div class="stage-label">Step 3 — What you actually want out of this</div>
+      <p class="stage-q">What matters more to you right now?</p>
+
+      <button class="choice" data-stage="3" data-value="stop">
+        <span class="tag">A</span>Stopping the infringing product quickly
+        <span class="sub">Even if it doesn't recover damages</span>
+      </button>
+      <button class="choice" data-stage="3" data-value="damages">
+        <span class="tag">B</span>Recovering damages and setting a deterrent
+        <span class="sub">Even if it takes longer</span>
+      </button>
+
+      <div class="answer" id="answer3" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- VERDICT -->
+  <div id="verdict"></div>
+
+  <div class="reset-row" id="resetRow" style="display:none;">
+    <button class="reset" onclick="resetTool()">Start over</button>
+  </div>
+
+</div>
+
+<footer>
+  <span>CHINA PATENT ADVISOR — PROTOTYPE</span>
+  <span>案卷 004 · 维权</span>
+</footer>
+
+<script>
+const state = { stage1: null, stage2: null, stage3: null };
+
+const stage1Answers = {
+  domestic: {
+    risk: false,
+    text: `<p><strong>You have two real tracks available, and they're not mutually exclusive.</strong> An <strong>administrative complaint</strong> to the local IP bureau can lead to a raid and seizure of infringing stock — often within weeks. A <strong>civil suit</strong> at a specialized IP court runs longer but is the only path to damages.</p>`,
+    urgency: `⏱ If this is visible at a trade show or actively selling, administrative action can move fast — sometimes within days of filing — but only if evidence is ready to submit immediately. Delay lets the seller simply relocate stock.`
+  },
+  export: {
+    risk: false,
+    text: `<p><strong>Customs enforcement is your fastest lever here, but it only works if set up in advance.</strong> If your patent is recorded with China Customs, shipments can be flagged and held at the border before they ever leave the country — this is often faster and cheaper than any court process.</p>`,
+    urgency: `⏱ If your patent isn't yet recorded with China Customs, that's the first thing to fix — it typically takes a few weeks to register, and nothing is caught at the border until it's done.`
+  }
+};
+
+const stage2Answers = {
+  clear: `<p><strong>This is exactly the foundation you need.</strong> A clean, element-by-element claim chart is what makes both administrative complaints and civil suits move quickly and credibly — courts and IP bureaus respond far better to precise mapping than to general similarity arguments.</p>`,
+  partial: `<p><strong>Get the claim chart done before filing anything.</strong> "It looks similar" is not what a court or IP bureau evaluates — they need to see, claim element by claim element, how the accused product reads on your patent. This is usually a quick, well-defined piece of work, and it changes how seriously any complaint is taken.</p>`,
+  weak: `<p><strong>Don't file yet — build the case first.</strong> Acting on circumstantial similarity risks a weak complaint being dismissed or, worse, undermining a stronger case later. A proper technical comparison should come before any formal action, even if that costs a few weeks.</p>`
+};
+
+const stage3Answers = {
+  stop: `<p><strong>Then administrative action or customs seizure is usually your fastest tool</strong> — both are built for exactly this: stopping specific infringing goods quickly, without the timeline of a full civil case. Neither delivers damages, but neither needs to in order to succeed at their actual goal.</p>`,
+  damages: `<p><strong>Then a civil suit is the only route that gets you there</strong> — administrative and customs actions stop goods, they don't award compensation. Plan for a longer timeline, but frame the case from the start around both stopping the infringement and quantifying your losses.</p>`
+};
+
+function renderVerdict(){
+  if(!state.stage1 || !state.stage2 || !state.stage3) return;
+  const s1 = state.stage1, s2 = state.stage2, s3 = state.stage3;
+
+  let headline, successRange, timeline, costLevel, actions, caseLabel, caseText, planB;
+
+  const pitfalls = [
+    'Not recording the patent with China Customs in advance — this is the single most common reason a fast, cheap enforcement option turns out to be unavailable when it\'s actually needed.',
+    'Filing a complaint or suit built on general similarity rather than a formal claim chart — reviewers and courts respond to precise element-by-element mapping, not impressions.',
+    'Assuming an administrative raid or customs seizure resolves the underlying loss — it stops that specific batch of goods, it does not compensate you or reliably stop the next one.'
+  ];
+
+  const counterRisk = `Enforcement actions are sometimes met with a countersuit or an invalidation challenge against your own patent — before filing, do a quick self-check on your own patent's validity and freedom-to-operate exposure, so you're not caught off guard.`;
+
+  if(s1 === 'domestic' && s2 === 'clear'){
+    headline = 'File an administrative complaint now — your evidence supports fast action.';
+    successRange = '60–70%'; timeline = '3–8 weeks'; costLevel = 'US$5,000–15,000';
+    actions = ['File the administrative complaint with the local IP bureau immediately','Request a raid and seizure of infringing stock','Keep the claim chart ready to escalate to civil litigation if damages become the goal'];
+    caseLabel = 'Comparable case';
+    caseText = 'A US toolmaker found counterfeit versions of a patented mechanism at a Chinese trade show. With a clean claim chart ready, an administrative complaint led to an on-site raid and seizure within about three weeks — fast, low-cost, though it stopped that seller rather than compensating for past sales.';
+    planB = ['If administrative action isn\'t enough: escalate to a civil suit using the same evidence base, now already prepared','Consider whether other resellers of the same infringing product need separate action'];
+  } else if(s1 === 'domestic' && s2 === 'partial'){
+    headline = 'Build the claim chart first, then move fast.';
+    successRange = '35–45% until the chart is complete'; timeline = '2–4 weeks to prepare, then 3–8 weeks to act'; costLevel = 'US$3,000–8,000 to prepare, then as above';
+    actions = ['Commission a formal claim-by-claim comparison before filing anything','Once complete, file an administrative complaint for speed','Preserve evidence of sales and distribution in the meantime'];
+    caseLabel = 'Comparable pattern';
+    caseText = 'Most cases that stall at this stage aren\'t weak on the merits — they\'re just not yet organized in the form reviewers need. A few weeks spent building a proper technical comparison usually moves a case from "probably infringing" to something an IP bureau will act on quickly.';
+    planB = ['If the comparison reveals real gaps: consider whether a narrower claim still covers the product before abandoning the case'];
+  } else if(s1 === 'domestic' && s2 === 'weak'){
+    headline = 'Hold off on filing — get the technical comparison done first.';
+    successRange = 'Too early to estimate'; timeline = '3–6 weeks to assess'; costLevel = 'US$3,000–8,000';
+    actions = ['Commission a proper element-by-element comparison before any filing','Document what you\'ve observed in the meantime — dates, photos, listings','Reassess enforcement options once the comparison is in hand'];
+    caseLabel = 'Why this matters';
+    caseText = 'Filing on impression alone risks a quick dismissal, which can make a stronger, better-prepared case harder to bring later. The technical comparison is worth doing regardless of what it shows.';
+    planB = ['If the comparison shows weak infringement: consider whether other IP (trademark, design, trade dress) offers a cleaner path instead'];
+  } else if(s1 === 'export' && s2 === 'clear'){
+    headline = 'Record with Customs now and prepare a civil claim in parallel.';
+    successRange = '65–75% for customs interdiction'; timeline = '2–4 weeks to record, ongoing enforcement after'; costLevel = 'US$3,000–8,000 to record, plus monitoring';
+    actions = ['Record the patent with China Customs immediately','Submit your claim chart as supporting documentation','Consider a parallel civil suit if damages matter to you'];
+    caseLabel = 'Comparable case';
+    caseText = 'Once a patent is properly recorded with China Customs and paired with a clear claim chart, shipments matching the profile are commonly flagged and held before export — often the most cost-effective enforcement lever available for this kind of situation.';
+    planB = ['If goods still slip through: pursue the domestic manufacturer directly through a civil suit using the same evidence'];
+  } else if(s1 === 'export' && s2 === 'partial'){
+    headline = 'Get the claim chart done, then record with Customs.';
+    successRange = 'Depends on chart completion'; timeline = '2–4 weeks to prepare, then 2–4 weeks to record'; costLevel = 'US$3,000–8,000 for the comparison, similar again for recordal';
+    actions = ['Commission the formal claim comparison first','Record with China Customs once the comparison is solid','Monitor shipment patterns in the meantime if possible'];
+    caseLabel = 'Comparable pattern';
+    caseText = 'Customs recordal applications move faster and are taken more seriously with a clear, specific technical comparison attached — this is worth doing properly rather than filing with a vague description of the infringement.';
+    planB = ['If comparison is inconclusive: consider design or trademark-based customs recordal as an interim measure'];
+  } else {
+    headline = 'Build your technical case before pursuing customs or litigation.';
+    successRange = 'Too early to estimate'; timeline = '3–6 weeks to assess'; costLevel = 'US$3,000–8,000';
+    actions = ['Commission a proper claim-by-claim comparison first','Record with Customs once the comparison supports it','Keep documenting shipment patterns and evidence in the meantime'];
+    caseLabel = 'Why this matters';
+    caseText = 'Customs recordal and litigation both depend on being able to show precisely how a product infringes — general similarity isn\'t enough to act on. This step is foundational, not optional, before any enforcement track is pursued.';
+    planB = ['If infringement turns out to be weak: consider whether other rights (design, trademark) offer better protection for this situation'];
+  }
+
+  document.getElementById('verdict').innerHTML = `
+    <div class="verdict">
+      <div class="seal-stamp"><span>案</span></div>
+      <div class="verdict-label">Assessment</div>
+      <h3>${headline}</h3>
+      <p>The infringement is <strong>${s1 === 'domestic' ? 'within the Chinese market' : 'being exported from China'}</strong>, your evidence is <strong>${s2 === 'clear' ? 'clearly mapped to your claims' : s2 === 'partial' ? 'suggestive but not formally compared' : 'mostly circumstantial'}</strong>, and you're prioritizing <strong>${s3 === 'stop' ? 'speed' : 'damages and deterrence'}</strong>:</p>
+      <ul>${actions.map(a => `<li>${a}</li>`).join('')}</ul>
+      <div class="stat-row">
+        <div class="stat"><div class="n">${successRange}</div><div class="l">Typical outcome rate</div></div>
+        <div class="stat"><div class="n">${timeline}</div><div class="l">Timeline</div></div>
+        <div class="stat"><div class="n">${costLevel}</div><div class="l">Cost estimate</div></div>
+      </div>
+
+      <div class="case-block">
+        <span class="case-label">${caseLabel}</span>
+        ${caseText}
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title risk-title">⚠ Risk to watch for</div>
+        <p style="margin:0;">${counterRisk}</p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Common mistakes at this stage</div>
+        <ul class="pitfall-list">${pitfalls.map(p => `<li>${p}</li>`).join('')}</ul>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title planb-title">If this path doesn't fully resolve it — Plan B</div>
+        <ul class="planb-list">${planB.map(p => `<li>${p}</li>`).join('')}</ul>
+      </div>
+    </div>
+  `;
+  document.getElementById('resetRow').style.display = 'block';
+  document.getElementById('verdict').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+document.querySelectorAll('.choice[data-stage="1"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.choice[data-stage="1"]').forEach(b => { b.classList.remove('selected'); b.disabled = true; });
+    btn.classList.add('selected');
+    state.stage1 = btn.dataset.value;
+    const a = stage1Answers[state.stage1];
+    const box = document.getElementById('answer1');
+    box.className = 'answer' + (a.risk ? ' risk' : '');
+    box.innerHTML = a.text + `<div class="urgency">${a.urgency}</div>`;
+    box.style.display = 'block';
+    document.getElementById('stage1').classList.add('done');
+    document.getElementById('stage2').style.display = 'block';
+    renderVerdict();
+  });
+});
+
+document.querySelectorAll('.choice[data-stage="2"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.choice[data-stage="2"]').forEach(b => { b.classList.remove('selected'); b.disabled = true; });
+    btn.classList.add('selected');
+    state.stage2 = btn.dataset.value;
+    const box = document.getElementById('answer2');
+    box.className = 'answer';
+    box.innerHTML = stage2Answers[state.stage2];
+    box.style.display = 'block';
+    document.getElementById('stage2').classList.add('done');
+    document.getElementById('stage3').style.display = 'block';
+    renderVerdict();
+  });
+});
+
+document.querySelectorAll('.choice[data-stage="3"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.choice[data-stage="3"]').forEach(b => { b.classList.remove('selected'); b.disabled = true; });
+    btn.classList.add('selected');
+    state.stage3 = btn.dataset.value;
+    const box = document.getElementById('answer3');
+    box.className = 'answer';
+    box.innerHTML = stage3Answers[state.stage3];
+    box.style.display = 'block';
+    document.getElementById('stage3').classList.add('done');
+    renderVerdict();
+  });
+});
+
+function resetTool(){
+  state.stage1 = null; state.stage2 = null; state.stage3 = null;
+  document.querySelectorAll('.choice').forEach(b => { b.classList.remove('selected'); b.disabled = false; });
+  document.getElementById('answer1').style.display = 'none';
+  document.getElementById('answer2').style.display = 'none';
+  document.getElementById('answer3').style.display = 'none';
+  document.getElementById('stage2').style.display = 'none';
+  document.getElementById('stage3').style.display = 'none';
+  document.getElementById('stage1').classList.remove('done');
+  document.getElementById('stage2').classList.remove('done');
+  document.getElementById('stage3').classList.remove('done');
+  document.getElementById('verdict').innerHTML = '';
+  document.getElementById('resetRow').style.display = 'none';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+
+
+</body></html>
