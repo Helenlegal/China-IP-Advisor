@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>China Patent Advisor — Scenario 01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#20211d;
+    --paper:#e9e5d8;
+    --paper-2:#ded8c5;
+    --seal:#a8321f;
+    --seal-dark:#7c2416;
+    --jade:#3c6e5c;
+    --amber:#8a5a1f;
+    --line: rgba(32,33,29,0.16);
+    --line-strong: rgba(32,33,29,0.32);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .bg-texture{
+    position:fixed; inset:0; pointer-events:none; opacity:0.05;
+    background-image: repeating-linear-gradient(0deg, var(--ink) 0px, var(--ink) 1px, transparent 1px, transparent 3px);
+  }
+  .wrap{ max-width:760px; margin:0 auto; padding:56px 24px 120px; position:relative; }
+  header.hero{ border-bottom:1px solid var(--line-strong); padding-bottom:32px; margin-bottom:48px; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--seal); display:flex; align-items:center; gap:10px; margin-bottom:18px;
+  }
+  .eyebrow::before{ content:''; width:7px;height:7px; background:var(--seal); display:inline-block; transform:rotate(45deg); }
+  h1{ font-size:clamp(26px,5vw,38px); line-height:1.16; margin:0 0 14px; font-weight:700; letter-spacing:-0.01em; }
+  .cn-sub{ font-family:'Noto Serif SC', serif; font-size:15px; color:rgba(32,33,29,0.6); margin:0 0 20px; }
+  .hero-desc{ font-size:16px; line-height:1.6; color:rgba(32,33,29,0.78); max-width:56ch; }
+
+  .stage{ position:relative; padding-left:28px; border-left:1px solid var(--line); margin-bottom:8px; }
+  .stage.done{border-left-color:var(--line-strong);}
+  .stage-dot{ position:absolute; left:-6px; top:2px; width:11px;height:11px; border-radius:50%; background:var(--paper); border:1.5px solid var(--line-strong); }
+  .stage.done .stage-dot{ background:var(--seal); border-color:var(--seal); }
+  .stage-block{ padding: 6px 0 44px; }
+  .stage-label{ font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:rgba(32,33,29,0.5); margin-bottom:10px; }
+  .stage-q{ font-size:20px; font-weight:600; line-height:1.35; margin:0 0 22px; max-width:48ch; }
+
+  .choice{
+    display:block; width:100%; text-align:left; background:var(--paper-2); border:1px solid var(--line);
+    color:var(--ink); font-family:'Source Serif 4', serif; padding:16px 18px; margin-bottom:10px;
+    cursor:pointer; font-size:15.5px; line-height:1.5;
+    transition: border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  .choice .tag{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--seal); margin-right:10px; }
+  .choice .sub{ display:block; font-size:13px; color:rgba(32,33,29,0.55); margin-top:4px; }
+  .choice:hover{ border-color:var(--line-strong); background:#e2dcc7; }
+  .choice:active{ transform:scale(0.997); }
+  .choice.selected{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .choice.selected .tag{ color:#e0a08f; }
+  .choice.selected .sub{ color:rgba(233,229,216,0.6); }
+  .choice:disabled{ cursor:default; }
+
+  .answer{
+    margin-top:20px; padding:22px 24px; background:rgba(32,33,29,0.035); border-left:3px solid var(--jade);
+    font-size:15.5px; line-height:1.7; color:rgba(32,33,29,0.86); animation: rise .35s ease both;
+  }
+  .answer.risk{ border-left-color:var(--seal); }
+  .answer strong{ color:var(--ink); }
+  .answer p{ margin:0 0 12px; }
+  .answer p:last-child{ margin-bottom:0; }
+  @keyframes rise{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
+
+  .case-block{
+    margin-top:14px; padding:14px 16px; background:rgba(60,110,92,0.07); border:1px dashed rgba(60,110,92,0.35);
+    font-size:14px; line-height:1.65; color:rgba(32,33,29,0.78);
+  }
+  .case-block .case-label{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--jade); margin-bottom:6px; display:block;
+  }
+
+  .urgency{
+    margin-top:14px; padding:12px 16px; background:rgba(168,50,31,0.08); border-left:3px solid var(--seal);
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; letter-spacing:0.01em; color:var(--seal-dark); line-height:1.6;
+  }
+
+  .verdict{ position:relative; margin-top:16px; padding:36px 30px 30px; border:1px solid var(--line-strong); background:#f2efe4; animation: rise .5s ease both; }
+  .seal-stamp{
+    position:absolute; top:-22px; right:24px; width:74px; height:74px; border:3px solid var(--seal); border-radius:6px;
+    display:flex; align-items:center; justify-content:center; background:var(--paper); transform: rotate(-6deg); box-shadow:0 2px 0 rgba(0,0,0,0.05);
+  }
+  .seal-stamp span{ font-family:'Noto Serif SC', serif; font-weight:700; color:var(--seal); font-size:26px; line-height:1; }
+  .verdict-label{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--seal); margin-bottom:10px; }
+  .verdict h3{ margin:0 0 14px; font-size:19px; max-width:34ch; }
+  .verdict p{ font-size:15.5px; line-height:1.7; color:rgba(32,33,29,0.82); margin:0 0 14px; }
+  .verdict ul{ margin:0 0 14px; padding-left:20px; }
+  .verdict li{ font-size:15px; line-height:1.6; margin-bottom:6px; color:rgba(32,33,29,0.82); }
+  .stat-row{ display:flex; gap:22px; margin-top:18px; margin-bottom:22px; flex-wrap:wrap; }
+  .stat{ min-width:110px; }
+  .stat .n{ font-family:'IBM Plex Mono', monospace; font-size:21px; color:var(--ink); font-weight:500; }
+  .stat .l{ font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:rgba(32,33,29,0.5); margin-top:2px; }
+
+  .subsection{ margin-top:24px; padding-top:22px; border-top:1px solid var(--line); }
+  .subsection-title{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:rgba(32,33,29,0.55); margin-bottom:12px; display:flex; align-items:center; gap:8px;
+  }
+  .subsection-title.risk-title{ color:var(--seal); }
+  .subsection-title.planb-title{ color:var(--amber); }
+  .pitfall-list{ margin:0; padding-left:0; list-style:none; }
+  .pitfall-list li{ font-size:14.5px; line-height:1.6; margin-bottom:10px; padding-left:18px; position:relative; color:rgba(32,33,29,0.8); }
+  .pitfall-list li::before{ content:'—'; position:absolute; left:0; color:var(--seal); }
+  .planb-list{ margin:0; padding-left:0; list-style:none; }
+  .planb-list li{ font-size:14.5px; line-height:1.6; margin-bottom:8px; padding-left:18px; position:relative; color:rgba(32,33,29,0.8); }
+  .planb-list li::before{ content:'→'; position:absolute; left:0; color:var(--amber); }
+
+  .reset-row{ margin-top:40px; text-align:center; }
+  .reset{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;
+    background:none; border:1px solid var(--line-strong); color:var(--ink); padding:10px 20px; cursor:pointer;
+  }
+  .reset:hover{ background:var(--ink); color:var(--paper); }
+
+  footer{
+    max-width:760px; margin:60px auto 0; padding:24px; border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:rgba(32,33,29,0.45); letter-spacing:0.04em;
+    display:flex; justify-content:space-between;
+  }
+
+  @media (max-width:520px){
+    .wrap{ padding:40px 18px 100px; }
+    .seal-stamp{ width:58px; height:58px; right:16px; top:-18px; }
+    .seal-stamp span{ font-size:20px; }
+    .stat-row{ gap:16px; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-texture"></div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">China Patent Advisor · Scenario 01 of 05</div>
+    <h1>A competitor filed a patent on our technology first.<br>What can we actually do?</h1>
+    <p class="cn-sub">竞争对手抢先在中国申请了我们的技术专利</p>
+    <p class="hero-desc">Answer three questions about your situation. You'll get a specific assessment — success odds, cost, timeline, counter-risk, and what to do if it doesn't go your way.</p>
+  </header>
+
+  <!-- STAGE 1 -->
+  <div class="stage done" id="stage1">
+    <div class="stage-dot"></div>
+    <div class="stage-block">
+      <div class="stage-label">Step 1 — Filing status</div>
+      <p class="stage-q">Where does the competitor's patent stand right now?</p>
+
+      <button class="choice" data-stage="1" data-value="pending">
+        <span class="tag">A</span>Still under examination — not yet granted
+      </button>
+      <button class="choice" data-stage="1" data-value="granted">
+        <span class="tag">B</span>Already granted
+      </button>
+
+      <div class="answer" id="answer1" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- STAGE 2 -->
+  <div class="stage" id="stage2" style="display:none;">
+    <div class="stage-dot"></div>
+    <div class="stage-block">
+      <div class="stage-label">Step 2 — Your evidence</div>
+      <p class="stage-q">Can you show you were using this technology before they filed?</p>
+
+      <button class="choice" data-stage="2" data-value="clear">
+        <span class="tag">A</span>Yes — dated proof (product launch, invoices, contracts, marketing)
+      </button>
+      <button class="choice" data-stage="2" data-value="partial">
+        <span class="tag">B</span>Some evidence, but incomplete or hard to date precisely
+      </button>
+      <button class="choice" data-stage="2" data-value="none">
+        <span class="tag">C</span>No documented evidence of prior use
+      </button>
+
+      <div class="answer" id="answer2" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- STAGE 3 -->
+  <div class="stage" id="stage3" style="display:none;">
+    <div class="stage-dot"></div>
+    <div class="stage-block">
+      <div class="stage-label">Step 3 — What matters more to you</div>
+      <p class="stage-q">If there's a trade-off between the two, which matters more right now?</p>
+
+      <button class="choice" data-stage="3" data-value="speed">
+        <span class="tag">A</span>Resolving this quickly
+        <span class="sub">Even if it means a narrower shot, or a negotiated outcome</span>
+      </button>
+      <button class="choice" data-stage="3" data-value="success">
+        <span class="tag">B</span>Maximizing the chance of winning outright
+        <span class="sub">Even if it takes longer and costs more</span>
+      </button>
+
+      <div class="answer" id="answer3" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- VERDICT -->
+  <div id="verdict"></div>
+
+  <div class="reset-row" id="resetRow" style="display:none;">
+    <button class="reset" onclick="resetTool()">Start over</button>
+  </div>
+
+</div>
+
+<footer>
+  <span>CHINA PATENT ADVISOR — PROTOTYPE</span>
+  <span>案卷 001 · 抢先申请</span>
+</footer>
+
+<script>
+const state = { stage1: null, stage2: null, stage3: null };
+
+const stage1Answers = {
+  pending: {
+    risk: false,
+    text: `<p><strong>This is your strongest position.</strong> Their patent has no legal force yet — you can act before it's ever protected. File a <strong>pre-grant observation</strong> or, once published, a formal <strong>opposition</strong> with China's patent office, submitting proof you were using the technology first.</p>`,
+    urgency: `⏱ This window is typically only 3–6 months from publication. Once it closes, your options narrow sharply and costs rise. Acting now is not optional.`
+  },
+  granted: {
+    risk: true,
+    text: `<p><strong>Harder, but not closed.</strong> You'll need to file an <strong>invalidation request</strong> with the Patent Reexamination Board, arguing the patent fails novelty or inventiveness requirements.</p>`,
+    urgency: `⏱ There's no hard filing deadline for invalidation, but every month you wait is a month they can act on the patent — including sending you a warning letter or filing infringement first.`
+  }
+};
+
+const stage2Answers = {
+  clear: `<p><strong>This is your strongest card.</strong> Product launch dates, customer orders, invoices, archived web pages, and trade-show records all carry real weight in Chinese proceedings. Build a dated timeline from these now — the more granular, the better.</p>`,
+  partial: `<p><strong>Workable, but it needs reinforcement.</strong> Supplement with customer correspondence, internal development logs, or witness statements to close the gaps in your timeline. Chinese courts weigh indirect evidence cautiously — what matters is whether the pieces form a coherent, unbroken chain.</p>`,
+  none: `<p><strong>This is a genuinely difficult position.</strong> Without prior-use evidence, an invalidation attempt has very low odds of success. The more realistic paths are negotiating a licensing arrangement, or a freedom-to-operate review to see whether a design-around avoids infringement altogether.</p>`
+};
+
+const stage3Answers = {
+  speed: `<p><strong>Speed changes the calculus.</strong> If your filing is still pending, opposition is already the fast path — stay on it. If the patent is already granted, a full invalidation fight (1–2 years) may not fit your timeline; a negotiated license, agreed early, can close this in weeks rather than years, at the cost of ongoing royalty.</p>`,
+  success: `<p><strong>Then we optimize for the strongest possible case</strong>, not the fastest one. That means investing more up front in evidence-gathering and technical argument — even if it extends the timeline — because a half-built case is the most expensive way to lose.</p>`
+};
+
+function renderVerdict(){
+  if(!state.stage1 || !state.stage2 || !state.stage3) return;
+  const s1 = state.stage1, s2 = state.stage2, s3 = state.stage3;
+
+  let headline, successRange, timeline, costLevel, actions, caseLabel, caseText, pitfalls, counterRisk, planB;
+
+  pitfalls = [
+    'Waiting to "see how things develop" instead of acting inside the filing window — the single most common and most costly mistake.',
+    'Holding evidence that proves the product exists, but not clearly dating it — a launch photo means little without a verifiable timestamp.',
+    'Submitting prior-art arguments that are too technical for the reviewing panel to see why they defeat novelty — the "why" has to be spelled out, not assumed.'
+  ];
+
+  counterRisk = `Filing an opposition or invalidation does not stop the other side from acting. In parallel, prepare a basic <strong>freedom-to-operate defense</strong> — know your fallback design, and don't wait for a warning letter to start thinking about it.`;
+
+  if(s1 === 'pending' && s2 === 'clear'){
+    headline = 'File an opposition now — you have the evidence and the timing.';
+    successRange = '65–75%'; timeline = '3–6 months'; costLevel = 'US$8,000–15,000';
+    actions = ['Compile a dated timeline of prior use immediately','File a pre-grant observation or opposition','Preserve all originals — invoices, contracts, archived pages'];
+    caseLabel = 'Comparable case';
+    caseText = 'A US chip-design company found a competitor had filed on a similar power-management architecture. With a product launch press release, customer orders, and trade-show records clearly dated, they filed a pre-grant opposition — the filing never matured into a patent. Roughly 4 months from discovery to resolution.';
+    planB = ['If opposition fails: the patent proceeds to grant, but you can still pursue invalidation afterward using the same evidence','Reassess freedom-to-operate — is a design-around realistic if this stalls?','Open a licensing conversation in parallel, as a floor, not a first move'];
+  } else if(s1 === 'pending' && s2 === 'partial'){
+    headline = 'Move fast to shore up evidence before the filing window closes.';
+    successRange = '40–50%'; timeline = '3–8 months'; costLevel = 'US$8,000–18,000';
+    actions = ['Gather supplementary proof — emails, logs, witnesses','File opposition before grant, even with a partial record','Flag weak points to counsel before submission'];
+    caseLabel = 'Comparable pattern';
+    caseText = 'Companies in this position often have real prior use but no single clean document proving it. The fix is usually assembling several partial sources — shipping records plus internal emails plus a dated demo video — into one coherent chain, rather than waiting for a single perfect proof that doesn\'t exist.';
+    planB = ['If the opposition is weak on filing: consider withdrawing and building a stronger invalidation case post-grant instead','Start a licensing conversation as a fallback now, not after losing','Get a freedom-to-operate opinion in parallel'];
+  } else if(s1 === 'pending' && s2 === 'none'){
+    headline = 'The window is open, but you need something to stand on.';
+    successRange = '15–25%'; timeline = '3–6 months'; costLevel = 'US$5,000–12,000';
+    actions = ['Search hard for any indirect proof of prior use','Consider a parallel licensing conversation as a fallback','Get freedom-to-operate advice before committing further spend'];
+    caseLabel = 'Comparable pattern';
+    caseText = 'Without prior-use evidence, opposition rarely succeeds outright — but filing can still slow the process and create leverage for a licensing negotiation, which is where most cases like this actually end up settling.';
+    planB = ['If opposition fails: the patent grants — shift immediately to licensing negotiation or design-around','Do not delay the freedom-to-operate review waiting on the opposition outcome','Budget for the likelihood this ends in a negotiated royalty, not a win'];
+  } else if(s1 === 'granted' && s2 === 'clear'){
+    headline = 'Strong grounds for invalidation — proceed with confidence.';
+    successRange = '55–65%'; timeline = '1–2 years'; costLevel = 'US$35,000–60,000';
+    actions = ['File invalidation with the Patent Reexamination Board','Prepare a defense in case of a parallel infringement claim','Build your prior-art case with maximum documentary detail'];
+    caseLabel = 'Comparable case';
+    caseText = 'A US chip-design company\'s counterpart scenario, discovered after grant: with the same clear evidence, invalidation is a stronger fight than most people expect, provided the prior-art argument is spelled out in terms a technical review panel can act on, not just proven.';
+    planB = ['If invalidation fails: appeal to the Beijing IP Court is available — same evidence, second review','Prepare your infringement defense now, not after a claim lands','Keep a licensing offer on the table as a floor throughout'];
+  } else if(s1 === 'granted' && s2 === 'partial'){
+    headline = 'A real but uphill invalidation case — budget accordingly.';
+    successRange = '25–35%'; timeline = '1–2 years'; costLevel = 'US$35,000–55,000';
+    actions = ['Invest in closing evidentiary gaps before filing','Weigh invalidation cost against a negotiated license','Assess infringement exposure in parallel'];
+    caseLabel = 'Comparable case';
+    caseText = 'A European manufacturer discovered a granted patent over a year late, with only fragmentary evidence. The invalidation was rejected on the strength of the record. They moved to a negotiated annual royalty instead — a slower discovery timeline was the deciding factor, not the strength of the underlying facts.';
+    planB = ['If invalidation fails: negotiate a license before an infringement claim forces the terms','Explore design-around feasibility as a parallel track','Weigh appeal to Beijing IP Court against settlement cost'];
+  } else {
+    headline = 'Invalidation is unlikely — shift toward negotiation or design-around.';
+    successRange = 'Under 15%'; timeline = 'Varies'; costLevel = 'Depends on path';
+    actions = ['Open a licensing conversation with the patent holder','Commission a freedom-to-operate review','Explore design-around options to avoid infringement'];
+    caseLabel = 'Comparable pattern';
+    caseText = 'This is the position the European manufacturer case above settled into: no invalidation attempt, straight to a negotiated royalty. It\'s a manageable outcome, not a loss, if the design-around or licensing terms are negotiated from a position of knowing your numbers.';
+    planB = ['Negotiate licensing terms before any infringement claim is filed against you','Commission freedom-to-operate review immediately','If neither works, model the cost of a redesign against ongoing royalty'];
+  }
+
+  document.getElementById('verdict').innerHTML = `
+    <div class="verdict">
+      <div class="seal-stamp"><span>案</span></div>
+      <div class="verdict-label">Assessment</div>
+      <h3>${headline}</h3>
+      <p>Based on a filing that is <strong>${s1 === 'pending' ? 'still under examination' : 'already granted'}</strong>, with <strong>${s2 === 'clear' ? 'clear dated evidence' : s2 === 'partial' ? 'partial evidence' : 'no documented evidence'}</strong>, optimizing for <strong>${s3 === 'speed' ? 'speed' : 'maximum success odds'}</strong>:</p>
+      <ul>${actions.map(a => `<li>${a}</li>`).join('')}</ul>
+      <div class="stat-row">
+        <div class="stat"><div class="n">${successRange}</div><div class="l">Typical success rate</div></div>
+        <div class="stat"><div class="n">${timeline}</div><div class="l">Timeline</div></div>
+        <div class="stat"><div class="n">${costLevel}</div><div class="l">Legal cost estimate</div></div>
+      </div>
+
+      <div class="case-block">
+        <span class="case-label">${caseLabel}</span>
+        ${caseText}
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title risk-title">⚠ Counter-risk while you pursue this</div>
+        <p style="margin:0;">${counterRisk}</p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Common mistakes at this stage</div>
+        <ul class="pitfall-list">${pitfalls.map(p => `<li>${p}</li>`).join('')}</ul>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title planb-title">If this path doesn't work — Plan B</div>
+        <ul class="planb-list">${planB.map(p => `<li>${p}</li>`).join('')}</ul>
+      </div>
+    </div>
+  `;
+  document.getElementById('resetRow').style.display = 'block';
+  document.getElementById('verdict').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+document.querySelectorAll('.choice[data-stage="1"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.choice[data-stage="1"]').forEach(b => { b.classList.remove('selected'); b.disabled = true; });
+    btn.classList.add('selected');
+    state.stage1 = btn.dataset.value;
+    const a = stage1Answers[state.stage1];
+    const box = document.getElementById('answer1');
+    box.className = 'answer' + (a.risk ? ' risk' : '');
+    box.innerHTML = a.text + `<div class="urgency">${a.urgency}</div>`;
+    box.style.display = 'block';
+    document.getElementById('stage1').classList.add('done');
+    document.getElementById('stage2').style.display = 'block';
+    renderVerdict();
+  });
+});
+
+document.querySelectorAll('.choice[data-stage="2"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.choice[data-stage="2"]').forEach(b => { b.classList.remove('selected'); b.disabled = true; });
+    btn.classList.add('selected');
+    state.stage2 = btn.dataset.value;
+    const box = document.getElementById('answer2');
+    box.className = 'answer';
+    box.innerHTML = stage2Answers[state.stage2];
+    box.style.display = 'block';
+    document.getElementById('stage2').classList.add('done');
+    document.getElementById('stage3').style.display = 'block';
+    renderVerdict();
+  });
+});
+
+document.querySelectorAll('.choice[data-stage="3"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.choice[data-stage="3"]').forEach(b => { b.classList.remove('selected'); b.disabled = true; });
+    btn.classList.add('selected');
+    state.stage3 = btn.dataset.value;
+    const box = document.getElementById('answer3');
+    box.className = 'answer';
+    box.innerHTML = stage3Answers[state.stage3];
+    box.style.display = 'block';
+    document.getElementById('stage3').classList.add('done');
+    renderVerdict();
+  });
+});
+
+function resetTool(){
+  state.stage1 = null; state.stage2 = null; state.stage3 = null;
+  document.querySelectorAll('.choice').forEach(b => { b.classList.remove('selected'); b.disabled = false; });
+  document.getElementById('answer1').style.display = 'none';
+  document.getElementById('answer2').style.display = 'none';
+  document.getElementById('answer3').style.display = 'none';
+  document.getElementById('stage2').style.display = 'none';
+  document.getElementById('stage3').style.display = 'none';
+  document.getElementById('stage1').classList.remove('done');
+  document.getElementById('stage2').classList.remove('done');
+  document.getElementById('stage3').classList.remove('done');
+  document.getElementById('verdict').innerHTML = '';
+  document.getElementById('resetRow').style.display = 'none';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
