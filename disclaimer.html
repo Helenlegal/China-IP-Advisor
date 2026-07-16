@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disclaimer — China Patent Advisor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#20211d; --paper:#e9e5d8; --paper-2:#ded8c5; --seal:#a8321f; --seal-dark:#7c2416;
+    --jade:#3c6e5c; --amber:#8a5a1f; --line: rgba(32,33,29,0.16); --line-strong: rgba(32,33,29,0.32);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ background:var(--paper); color:var(--ink); font-family:'Source Serif 4', serif; -webkit-font-smoothing:antialiased; min-height:100vh; }
+  .bg-texture{ position:fixed; inset:0; pointer-events:none; opacity:0.05;
+    background-image: repeating-linear-gradient(0deg, var(--ink) 0px, var(--ink) 1px, transparent 1px, transparent 3px); }
+  .wrap{ max-width:760px; margin:0 auto; padding:64px 24px 100px; position:relative; }
+
+  header.hero{ border-bottom:1px solid var(--line-strong); padding-bottom:36px; margin-bottom:48px; text-align:center; }
+  .seal-mark{
+    width:64px; height:64px; margin:0 auto 24px; border:3px solid var(--seal); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; transform:rotate(-4deg);
+  }
+  .seal-mark span{ font-family:'Noto Serif SC', serif; font-weight:700; color:var(--seal); font-size:24px; }
+  .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--seal); margin-bottom:16px; }
+  h1{ font-size:clamp(26px,5vw,36px); line-height:1.15; margin:0 0 16px; font-weight:700; letter-spacing:-0.01em; }
+  .cn-sub{ font-family:'Noto Serif SC', serif; font-size:16px; color:rgba(32,33,29,0.6); margin:0 0 22px; }
+  .hero-desc{ font-size:16px; line-height:1.65; color:rgba(32,33,29,0.78); max-width:52ch; margin:0 auto; }
+
+  .section-label{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--seal); margin-bottom:14px; margin-top:40px;
+  }
+  .section-label:first-of-type{ margin-top:0; }
+
+  .clause{
+    background:var(--paper-2); border:1px solid var(--line); padding:22px 26px; margin-bottom:2px;
+    position:relative;
+  }
+  .clause::before{
+    content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--seal); opacity:0.5;
+  }
+  .clause p{ font-size:15px; line-height:1.7; color:rgba(32,33,29,0.85); margin:0 0 12px; }
+  .clause p:last-child{ margin-bottom:0; }
+  .clause strong{ color:var(--ink); }
+
+  .back-link{
+    display:inline-block; margin-top:40px; font-family:'IBM Plex Mono', monospace; font-size:12px;
+    letter-spacing:0.04em; color:var(--seal); text-decoration:none; border-bottom:1px solid var(--seal);
+    padding-bottom:2px;
+  }
+  .back-link:hover{ color:var(--seal-dark); border-color:var(--seal-dark); }
+
+  footer{ max-width:760px; margin:60px auto 0; padding:24px; border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:rgba(32,33,29,0.45); letter-spacing:0.04em;
+    display:flex; justify-content:space-between; text-align:left; }
+
+  @media (max-width:520px){
+    .wrap{ padding:48px 18px 80px; }
+    .clause{ padding:18px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-texture"></div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="seal-mark"><span>案</span></div>
+    <div class="eyebrow">China Patent Advisor</div>
+    <h1>Disclaimer</h1>
+    <p class="cn-sub">免责声明</p>
+    <p class="hero-desc">Please read this before relying on anything in this tool.</p>
+  </header>
+
+  <div class="section-label">Nature of this tool</div>
+  <div class="clause">
+    <p>China Patent Advisor is an educational and informational resource designed to help foreign businesses understand general concepts and procedures related to Chinese patent and intellectual property law.</p>
+    <p><strong>Using this tool does not create an attorney-client relationship</strong> between you and the author, and nothing on this site constitutes formal legal advice.</p>
+  </div>
+
+  <div class="section-label">Scope and currency</div>
+  <div class="clause">
+    <p>Content reflects general principles of Chinese patent law as understood at the time of writing. Laws, regulations, and judicial interpretations in China change, and this tool may not reflect the most current developments.</p>
+    <p>Patent and IP matters are highly fact-dependent. Your specific situation may involve details not captured by the general scenarios described here.</p>
+  </div>
+
+  <div class="section-label">No guarantee of outcome</div>
+  <div class="clause">
+    <p>Nothing in this tool guarantees any particular legal outcome, strategy, or result — whether in a patent application, an invalidation proceeding, an enforcement action, or any other matter.</p>
+  </div>
+
+  <div class="section-label">Before you act</div>
+  <div class="clause">
+    <p>Any decision you make based on information from this site is made at your own discretion and risk. Before taking legal action, making a filing, or making a business decision with legal implications, consult a patent attorney or agent licensed to practice in China who can assess the specific facts of your case.</p>
+  </div>
+
+  <a class="back-link" href="./index.html">← Back to scenarios</a>
+
+</div>
+
+<footer>
+  <span>© 2026 China Patent Advisor</span>
+  <span><a href="./index.html" style="color:inherit;">Home</a></span>
+</footer>
+
+</body>
+</html>
